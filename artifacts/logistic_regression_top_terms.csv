@@ -1,0 +1,61 @@
+class,term,coefficient
+negative,character__:( ,3.0992874406253548
+negative,character__ :(,3.0713921440614587
+negative,character__uck,2.9592475055182716
+negative,word__sad,2.8247832650794744
+negative,word__not,2.6850748962108177
+negative,word__worst,2.6410799527010638
+negative,character__ :( ,2.455106093800048
+negative,word__hate,2.4011824909617525
+negative,word__fuck,2.3802892337981283
+negative,character__fuc,2.3566905605914155
+negative,character__fuck,2.347705722646888
+negative,word__no,2.2963096259186275
+negative,word__ass,2.275655299473081
+negative,character__ los,2.152484541591309
+negative,character__ed ,2.1488527619397813
+negative,word__the worst,2.1435644172926613
+negative,character__shit,2.110763824774485
+negative,character__ wors,1.9781170461423374
+negative,character__n't ,1.9722615197856295
+negative,character__sad,1.969154524747901
+neutral,word__do you,1.4540250561725654
+neutral,character__... ,1.3588042939363716
+neutral,word__last day,1.3569488433786359
+neutral,word__bad blood,1.3094185498684907
+neutral,word__is there,1.2393169408198188
+neutral,word__at,1.214251666234605
+neutral,word__gucci,1.2118461470210662
+neutral,word__says he,1.1003658033361419
+neutral,word__are you,1.079466447475507
+neutral,word__never know,1.076855245855206
+neutral,word__it be,1.058430481329483
+neutral,word__what time,1.0445709417251183
+neutral,character__e: ,1.0412140748138106
+neutral,word__and may,1.0344919338407599
+neutral,word__this saturday,1.0251902138982951
+neutral,character__ or,1.0150465666462005
+neutral,word__ps4,1.0101584184104142
+neutral,word__shawn,0.9980287464535077
+neutral,word__ll just,0.9917967144151851
+neutral,character__s: ,0.9833021388498099
+positive,word__good,3.225373699168354
+positive,word__happy,3.1831446183677454
+positive,word__can wait,3.04981298769537
+positive,word__great,3.0449886586953814
+positive,word__best,3.042033612114434
+positive,character__ :),2.997473445911933
+positive,word__love,2.8783467296113074
+positive,character__:) ,2.7163491686060333
+positive,character__!! ,2.682182352161821
+positive,character__e! ,2.5184902230951023
+positive,character__s! ,2.4155219433250372
+positive,character__y! ,2.3526671657505123
+positive,word__nice,2.3517525083229156
+positive,character__lov,2.3431075459040343
+positive,word__fun,2.2942924767456883
+positive,character__love,2.2136555511948863
+positive,character__ lov,2.1868323675342514
+positive,character__t! ,2.1436664109351633
+positive,word__amazing,2.1427954982804462
+positive,character__ :) ,2.1369330717907458

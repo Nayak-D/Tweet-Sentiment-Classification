@@ -1,0 +1,10 @@
+split,label,count,proportion
+test,negative,3972,0.32334744382937153
+test,neutral,5937,0.4833116248778899
+test,positive,2375,0.19334093129273852
+train,negative,7093,0.15549709525375424
+train,neutral,20673,0.4532061821769155
+train,positive,17849,0.3912967225693303
+validation,negative,312,0.156
+validation,neutral,869,0.4345
+validation,positive,819,0.4095

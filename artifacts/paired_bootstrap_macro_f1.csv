@@ -1,0 +1,4 @@
+comparison_model,selected_minus_comparison_macro_f1,paired_bootstrap_ci_2_5,paired_bootstrap_ci_97_5,repetitions,ci_excludes_zero
+majority_baseline,0.3970992015899689,0.3876604090503644,0.4062546316898594,1000,True
+multinomial_nb,0.013333537922786465,0.0049239845182895755,0.02122374246918341,1000,True
+logistic_regression,-0.007941457740520463,-0.012634726287418869,-0.0031967185594831333,1000,True

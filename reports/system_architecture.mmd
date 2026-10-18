@@ -1,0 +1,12 @@
+flowchart LR
+    A[TweetEval sentiment benchmark] --> B[Validate labels and fixed splits]
+    B --> C[EDA and text-length/class summaries]
+    B --> D[Training split only]
+    D --> E[Stratified 3-fold CV tunes TF-IDF models]
+    E --> F[Majority baseline, Naive Bayes, Logistic Regression, Linear SVM]
+    F --> G[Validation macro-F1 selects model family]
+    G --> H[One-time evaluation on official test split]
+    H --> I[Metrics, confusion matrix, bootstrap intervals]
+    H --> J[Saved model and CLI prediction]
+    F --> K[Cross-validation fold scores and parameter table]
+    F --> L[Logistic Regression coefficient top terms]

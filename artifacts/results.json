@@ -1,0 +1,100 @@
+{
+  "majority_baseline": {
+    "cross_validation": {
+      "folds": 3,
+      "best_macro_f1": 0.20791093410572048,
+      "best_macro_f1_std": 0.0,
+      "best_params": {}
+    },
+    "validation": {
+      "accuracy": 0.4345,
+      "macro_precision": 0.14483333333333334,
+      "macro_recall": 0.3333333333333333,
+      "macro_f1": 0.20192866271639365
+    },
+    "test": {
+      "accuracy": 0.4833116248778899,
+      "macro_precision": 0.16110387495929665,
+      "macro_recall": 0.3333333333333333,
+      "macro_f1": 0.217221886833873
+    }
+  },
+  "multinomial_nb": {
+    "cross_validation": {
+      "folds": 3,
+      "best_macro_f1": 0.6127402337936271,
+      "best_macro_f1_std": 0.0031819282455200926,
+      "best_params": {
+        "classifier__alpha": 0.1
+      }
+    },
+    "validation": {
+      "accuracy": 0.6545,
+      "macro_precision": 0.6260343492226191,
+      "macro_recall": 0.6359055267283115,
+      "macro_f1": 0.630114614530607
+    },
+    "test": {
+      "accuracy": 0.6045262129599479,
+      "macro_precision": 0.597211329183503,
+      "macro_recall": 0.6082961079497476,
+      "macro_f1": 0.6009875505010555
+    }
+  },
+  "logistic_regression": {
+    "cross_validation": {
+      "folds": 3,
+      "best_macro_f1": 0.6536448462165025,
+      "best_macro_f1_std": 0.0034312721780782414,
+      "best_params": {
+        "classifier__C": 1.0
+      }
+    },
+    "validation": {
+      "accuracy": 0.6975,
+      "macro_precision": 0.6672695629302118,
+      "macro_recall": 0.6938506289772114,
+      "macro_f1": 0.6758458591084495
+    },
+    "test": {
+      "accuracy": 0.6245522631064799,
+      "macro_precision": 0.6159762099397357,
+      "macro_recall": 0.6336141159709145,
+      "macro_f1": 0.6222625461643624
+    }
+  },
+  "linear_svm": {
+    "cross_validation": {
+      "folds": 3,
+      "best_macro_f1": 0.6513420442213832,
+      "best_macro_f1_std": 0.001953851219171261,
+      "best_params": {
+        "classifier__C": 0.25
+      }
+    },
+    "validation": {
+      "accuracy": 0.7045,
+      "macro_precision": 0.6735636110497708,
+      "macro_recall": 0.6801168241041659,
+      "macro_f1": 0.6764893975986186
+    },
+    "test": {
+      "accuracy": 0.6190980136763269,
+      "macro_precision": 0.6081239918993603,
+      "macro_recall": 0.6240903306380928,
+      "macro_f1": 0.6143210884238419
+    }
+  },
+  "selected_model": "linear_svm",
+  "split_sizes": {
+    "test": 12284,
+    "train": 45615,
+    "validation": 2000
+  },
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "selection_metric": "mean cross-validation macro-F1 tunes each model; validation macro-F1 selects the model family; test split is held out for final evaluation"
+}

@@ -1,0 +1,25 @@
+class,feature,coefficient
+negative,character__:( ,2.050258205334148
+negative,character__ :(,2.020185820968635
+negative,character__uck,1.7577796868617972
+negative,word__sad,1.68913247284435
+negative,character__ :( ,1.5398445415013864
+negative,word__worst,1.5204305894991053
+negative,word__bad blood,-1.4249080280641349
+negative,word__ass,1.4210612021595181
+neutral,character__!! ,-1.9927182611238397
+neutral,word__great,-1.779877077746709
+neutral,word__good,-1.691940005505035
+neutral,character__ :),-1.651908281391227
+neutral,character__:) ,-1.559105513511874
+neutral,"character__!"" ",-1.5248863993862682
+neutral,word__happy,-1.522233002014305
+neutral,character__ i ,-1.3952048321006718
+positive,word__can wait,2.156797372867259
+positive,word__good,2.0473747184856834
+positive,word__great,2.0432491883621307
+positive,word__happy,2.029768163726137
+positive,character__ :),2.0210225464829703
+positive,character__!! ,1.9953267606880063
+positive,character__:) ,1.883023245032209
+positive,word__best,1.7845418028373987

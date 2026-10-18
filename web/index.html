@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172033">
+  <title>TweetEval · Sentiment Lab</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Sentiment Lab home">
+        <span class="brand-mark">
+          <svg viewBox="0 0 48 48" role="img" aria-label="SentimentLab colorful mark">
+            <defs>
+              <linearGradient id="markGradient" x1="5" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8E6BFF"/>
+                <stop offset=".52" stop-color="#5C63EB"/>
+                <stop offset="1" stop-color="#22B995"/>
+              </linearGradient>
+            </defs>
+            <path d="M24 3.5 43.3 14.7v18.6L24 44.5 4.7 33.3V14.7L24 3.5Z" fill="url(#markGradient)"/>
+            <path d="M31.8 16.5c-2-2-4.4-3-7.7-3-5.5 0-9.4 3-9.4 7.3 0 4.4 3.5 6 8.9 7.1 3.5.7 4.7 1.2 4.7 2.4 0 1.3-1.4 2-3.8 2-2.9 0-5.4-1-7.8-3.1l-3.5 4.2c2.8 2.6 6.8 4 11.2 4 6 0 10-2.8 10-7.6 0-4.2-3.2-5.9-8.7-7.1-3.7-.8-4.9-1.2-4.9-2.5 0-1.1 1.1-1.8 3-1.8 2.2 0 4.4.8 6.6 2.5l3.2-4.4-1.8-2Z" fill="white"/>
+            <circle cx="36.5" cy="11.5" r="3.3" fill="#FFD166"/>
+            <circle cx="10" cy="37" r="2.2" fill="#8BE0C1"/>
+          </svg>
+        </span>
+        <span>Sentiment<span class="brand-light">Lab</span></span>
+      </a>
+      <p class="side-label">WORKSPACE</p>
+      <nav class="navigation" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span>◫</span> Overview</a>
+        <a class="nav-link" href="#explorer"><span>⌕</span> Dataset explorer</a>
+        <a class="nav-link" href="#model"><span>✳</span> Try the model</a>
+        <a class="nav-link" href="#evaluation"><span>▥</span> Evaluation</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="dataset-badge"><span class="live-dot"></span><span>TweetEval · Sentiment</span></div>
+        <p>Research prototype<br>Three-class text analysis</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><span class="breadcrumb">Projects</span><span class="slash">/</span><strong>Sentiment analysis</strong></div>
+        <div class="top-meta"><span class="status-pill"><span class="live-dot"></span> Model ready</span><span class="avatar">DP</span></div>
+      </header>
+
+      <section class="hero section-anchor" id="overview">
+        <div class="hero-copy">
+          <span class="eyebrow">MACHINE LEARNING · NLP</span>
+          <h1>Understand the feeling<br>behind the <span>words.</span></h1>
+          <p>Explore TweetEval and see how a classical machine-learning pipeline classifies short social posts as negative, neutral, or positive.</p>
+          <a href="#model" class="button button-primary">Try a prediction <span>→</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="art-core"><span>text</span><strong>→</strong><span>mood</span></div>
+          <div class="art-chip chip-one">TF-IDF</div><div class="art-chip chip-two">SVM</div>
+          <div class="art-dot dot-one"></div><div class="art-dot dot-two"></div>
+        </div>
+      </section>
+
+      <div class="notice">
+        <span class="notice-icon">i</span>
+        <span>Educational benchmark only. Predictions may be wrong, especially for sarcasm, ambiguous wording, or unfamiliar topics.</span>
+        <a href="#evaluation">About the results</a>
+      </div>
+
+      <section class="stats-grid" aria-label="Dataset summary">
+        <article class="stat-card"><div class="stat-top"><span>DATASET SIZE</span><span class="stat-symbol purple">▤</span></div><strong id="total-samples">—</strong><small>public, labeled tweets</small></article>
+        <article class="stat-card"><div class="stat-top"><span>TRAINING SET</span><span class="stat-symbol blue">⌁</span></div><strong id="train-size">—</strong><small>official benchmark split</small></article>
+        <article class="stat-card"><div class="stat-top"><span>TEST ACCURACY</span><span class="stat-symbol green">◎</span></div><strong id="test-accuracy">—</strong><small>held-out test set</small></article>
+        <article class="stat-card"><div class="stat-top"><span>SELECTED MODEL</span><span class="stat-symbol orange">✳</span></div><strong class="model-stat" id="selected-model">—</strong><small>chosen on validation data</small></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">BENCHMARK</span><h2>Model performance</h2><p>Validation vs. held-out test scores</p></div>
+            <label class="select-wrap"><span class="sr-only">Choose score metric</span><select id="metric-selector"><option value="accuracy">Accuracy</option><option value="macro_f1">Macro-F1</option></select></label>
+          </div>
+          <div class="chart-wrap"><canvas id="performance-chart" aria-label="Model validation and test score chart" role="img"></canvas></div>
+          <div class="legend"><span><i class="legend-dot validation-dot"></i>Validation</span><span><i class="legend-dot test-dot"></i>Test</span></div>
+        </article>
+
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">DATASET</span><h2>Label distribution</h2><p>Explore class balance by split</p></div>
+            <label class="select-wrap"><span class="sr-only">Choose dataset split</span><select id="split-selector"><option value="train">Train</option><option value="validation">Validation</option><option value="test">Test</option></select></label>
+          </div>
+          <div class="donut-layout">
+            <div class="donut-wrap"><canvas id="distribution-chart" aria-label="Sentiment class distribution pie chart" role="img"></canvas><div class="donut-center"><strong id="split-total">—</strong><span>examples</span></div></div>
+            <div class="distribution-legend" id="distribution-legend"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="content-grid lower-grid" id="evaluation">
+        <article class="panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">MODEL VALIDATION</span><h2>Cross-validation stability</h2><p>Three stratified folds · training data only</p></div>
+          </div>
+          <div class="chart-wrap cv-wrap"><canvas id="cv-chart" aria-label="Cross-validation fold scores" role="img"></canvas></div>
+          <p class="micro-note">Bars show mean macro-F1; whiskers show variation across folds. Cross-validation informs tuning—it does not guarantee higher accuracy.</p>
+        </article>
+
+        <article class="panel matrix-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">ERROR ANALYSIS</span><h2>Confusion matrix</h2><p>Selected model on the test split</p></div>
+          </div>
+          <div class="matrix" id="confusion-matrix" aria-label="Test confusion matrix"></div>
+          <p class="matrix-caption">Rows are actual labels · columns are predictions</p>
+        </article>
+      </section>
+
+      <section class="panel process-panel">
+        <div class="panel-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>From raw text to a prediction</h2><p>Each step uses the supplied TweetEval train, validation, and test splits.</p></div></div>
+        <div class="process-flow">
+          <div class="process-step"><span>01</span><strong>Collect</strong><small>TweetEval public data</small></div><b>→</b>
+          <div class="process-step"><span>02</span><strong>Explore</strong><small>Labels and text checks</small></div><b>→</b>
+          <div class="process-step"><span>03</span><strong>Represent</strong><small>Word + character TF-IDF</small></div><b>→</b>
+          <div class="process-step"><span>04</span><strong>Compare</strong><small>3-fold CV · 4 models</small></div><b>→</b>
+          <div class="process-step"><span>05</span><strong>Evaluate</strong><small>Held-out test results</small></div>
+        </div>
+      </section>
+
+      <section class="content-grid interactive-grid">
+        <article class="panel predictor-panel section-anchor" id="model">
+          <div class="panel-heading">
+            <div><span class="eyebrow">LIVE DEMO</span><h2>Try the sentiment model</h2><p>Enter a short sentence and classify it with the saved pipeline.</p></div>
+            <span class="demo-icon">✳</span>
+          </div>
+          <form id="predict-form">
+            <label for="text-input">Your text</label>
+            <textarea id="text-input" maxlength="3000" placeholder="Example: I love this new feature, it works beautifully." required></textarea>
+            <div class="form-bottom"><span><span id="character-count">0</span>/3000 characters</span><button class="button button-primary" type="submit">Analyze text <span>→</span></button></div>
+          </form>
+          <div id="prediction-result" class="prediction-result" aria-live="polite" hidden></div>
+          <div id="prediction-error" class="error-message" aria-live="polite"></div>
+        </article>
+
+        <article class="panel explorer-panel section-anchor" id="explorer">
+          <div class="panel-heading">
+            <div><span class="eyebrow">BROWSE EXAMPLES</span><h2>Dataset explorer</h2><p>Search examples from the benchmark splits.</p></div>
+          </div>
+          <div class="filter-row">
+            <label><span class="sr-only">Dataset split</span><select id="example-split"><option value="test">Test</option><option value="train">Train</option><option value="validation">Validation</option></select></label>
+            <label><span class="sr-only">Sentiment label</span><select id="example-label"><option value="all">All labels</option><option value="negative">Negative</option><option value="neutral">Neutral</option><option value="positive">Positive</option></select></label>
+          </div>
+          <label class="search-box"><span>⌕</span><input id="example-search" type="search" placeholder="Search tweet text"></label>
+          <div class="example-list" id="example-list"><div class="loading">Loading examples…</div></div>
+          <div class="pagination"><span id="example-count">—</span><div><button id="previous-page" type="button" aria-label="Previous page">←</button><button id="next-page" type="button" aria-label="Next page">→</button></div></div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div><strong>SentimentLab</strong><span>TweetEval research prototype · PRG4206</span></div>
+        <p>Benchmark results are not real-world guarantees. The source sentiment corpus predates the TweetEval benchmark release.</p>
+      </footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
