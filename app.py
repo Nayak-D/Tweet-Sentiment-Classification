@@ -218,12 +218,27 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    model_path = ARTIFACTS / "sentiment_model.joblib"
-    if not model_path.is_file():
-        raise FileNotFoundError(
-            f"Trained model not found at {model_path}; run `python -m src.model` first."
+    model_backend = os.environ.get("MODEL_BACKEND", "sklearn").lower()
+    if model_backend == "sklearn":
+        model_path = ARTIFACTS / "sentiment_model.joblib"
+        if not model_path.is_file():
+            raise FileNotFoundError(
+                f"Trained model not found at {model_path}; run `python -m src.model` first."
+            )
+        DashboardHandler.model = joblib.load(model_path)
+    elif model_backend == "bertweet":
+        from src.bertweet import BertweetPredictor
+
+        model_reference = os.environ.get("BERTWEET_MODEL")
+        DashboardHandler.model = BertweetPredictor(
+            model_reference
+            if model_reference
+            else ARTIFACTS / "bertweet" / "model"
         )
-    DashboardHandler.model = joblib.load(model_path)
+    else:
+        raise ValueError(
+            f"Unsupported MODEL_BACKEND {model_backend!r}; use 'sklearn' or 'bertweet'."
+        )
     server = ThreadingHTTPServer((HOST, PORT), DashboardHandler)
     print(f"Tweet sentiment dashboard: http://{HOST}:{PORT}")
     print("Press Ctrl+C to stop.")

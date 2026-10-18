@@ -1,0 +1,5 @@
+accelerate>=1.0
+emoji>=2.0
+huggingface_hub>=0.27
+torch>=2.2
+transformers>=4.48,<5

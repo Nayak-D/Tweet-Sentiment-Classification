@@ -1,5 +1,6 @@
 import unittest
 
+from types import SimpleNamespace
 from sklearn.dummy import DummyClassifier
 
 from pathlib import Path
@@ -15,10 +16,27 @@ from src.model import (
     export_dataset_csvs,
     make_pipeline,
 )
+from src.bertweet import _compute_metrics
 from app import dashboard_summary, dataset_examples
 
 
 class SentimentPipelineTests(unittest.TestCase):
+    def test_bertweet_metrics_use_accuracy_and_macro_f1(self):
+        prediction = SimpleNamespace(
+            predictions=np.array(
+                [
+                    [3.0, 0.0, 0.0],
+                    [0.0, 3.0, 0.0],
+                    [3.0, 0.0, 0.0],
+                    [0.0, 0.0, 3.0],
+                ]
+            ),
+            label_ids=np.array([0, 1, 2, 2]),
+        )
+        metrics = _compute_metrics(prediction)
+        self.assertAlmostEqual(metrics["accuracy"], 0.75)
+        self.assertAlmostEqual(metrics["macro_f1"], 7 / 9)
+
     def test_searches_use_stratified_cross_validation(self):
         searches = build_model_searches(cv_folds=4)
         self.assertEqual(set(searches), {

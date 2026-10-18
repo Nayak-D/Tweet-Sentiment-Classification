@@ -362,7 +362,27 @@ The intended interaction sequence is: inspect the class mix before interpreting 
 
 Illustrative smoke-test inputs include “I absolutely love this, it made my day!”, “The product is okay, nothing special.”, and “Terrible service, I am very disappointed.” The observed outputs were positive, neutral, and negative, respectively. These are hand-selected examples with relatively direct wording. They verify that the interface accepts text, calls the saved pipeline, and displays a label; they do not measure generalization and must not be described as a representative test sample.
 
-### C.2. Expected inputs and outputs
+### C.2. Web dashboard workflow screenshots
+
+The following browser captures document the implemented dashboard workflow: reviewing the overview and benchmark summaries, inspecting evaluation results, and filtering labeled examples in the dataset explorer. The explorer capture shows the test split filtered to positive examples.
+
+**[FIGURE:workflow-dashboard-overview.png|Fig. C.1. Dashboard overview with benchmark summaries and model comparisons.]**
+
+**[FIGURE:workflow-model-evaluation.png|Fig. C.2. Cross-validation summary and selected-model test confusion matrix.]**
+
+**[FIGURE:workflow-dataset-explorer.png|Fig. C.3. Test-set examples filtered to the positive sentiment label.]**
+
+### C.3. Manual prediction test-case screenshots
+
+Each browser capture shows the supplied text and the label returned by the running web interface. These illustrative smoke tests verify the interaction path only; they are not a substitute for held-out test-set evaluation.
+
+**[FIGURE:test-case-positive.png|Fig. C.4. Test case 1: “I absolutely love this, it made my day!” returns positive.]**
+
+**[FIGURE:test-case-neutral.png|Fig. C.5. Test case 2: “The product is okay, nothing special.” returns neutral.]**
+
+**[FIGURE:test-case-negative.png|Fig. C.6. Test case 3: “Terrible service, I am very disappointed.” returns negative.]**
+
+### C.4. Expected inputs and outputs
 
 The inference function accepts a text string and returns a predicted sentiment category from the fixed set negative, neutral, and positive. Empty input is rejected or prevented by the interface rather than being interpreted as meaningful sentiment. The model does not request a username, account identifier, timestamp, location, or other user profile information. It operates on the submitted text only. It does not translate other languages or infer the target of the opinion.
 
@@ -370,7 +390,7 @@ The model's output format is deliberately small. It does not return an explanati
 
 The system also contains an example-browsing path that is useful in a classroom demonstration but should remain local and appropriately restricted. Tweet text can contain personal or sensitive information even when direct identifiers are not displayed. A publicly exposed dashboard or exported sample may create data-governance risks that are not addressed by the classroom prototype. Any deployment beyond local demonstration would require a security review, access controls, data-minimization decisions, applicable dataset-term review, and a process for responding to requests or corrections.
 
-### C.3. Operational limitations and failure handling
+### C.5. Operational limitations and failure handling
 
 The first uncached dataset download requires network access. A transient network failure, an unavailable hosting service, or a changed upstream dataset can prevent a fresh setup from reproducing the current CSVs. The downloaded and exported project files support offline inspection after acquisition, but a new training run should verify that it uses the same source revision and split sizes. A changed class count is a reason to stop and investigate rather than silently reporting results under the old description.
 

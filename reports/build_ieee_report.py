@@ -257,28 +257,63 @@ def _save_figures() -> None:
     fig.savefig(FIGURES / "cv-folds.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
-    fig, ax = plt.subplots(figsize=(6.0, 2.6))
+    fig, ax = plt.subplots(figsize=(13.5, 4.7))
+    ax.set_xlim(0, 16)
+    ax.set_ylim(0, 6)
     ax.axis("off")
+
     boxes = [
-        ("TweetEval", "official train / validation / test"),
-        ("Inspect", "labels · duplicates · text quality"),
-        ("TF-IDF", "word + character n-grams"),
-        ("Compare", "3-fold CV · four model families"),
-        ("Evaluate", "validation selection · held-out test"),
-        ("Prototype", "saved model · local dashboard"),
+        ("TweetEval", "official\ntrain / validation / test"),
+        ("Inspect", "labels · duplicates\ntext quality"),
+        ("TF-IDF", "word + character\nn-grams"),
+        ("Compare", "3-fold CV · four\nmodel families"),
+        ("Evaluate", "validation selection\nheld-out test"),
+        ("Prototype", "saved model\nlocal dashboard"),
     ]
-    x_centers = np.linspace(0.09, 0.91, len(boxes))
-    for index, ((title, sub), x) in enumerate(zip(boxes, x_centers)):
-        ax.text(x, 0.58, f"{title}\n{sub}", ha="center", va="center", fontsize=8,
-                bbox={"boxstyle": "round,pad=0.65", "facecolor": "#f4f1ff" if index % 2 == 0 else "#eff9f5",
-                      "edgecolor": "#c9c2ed" if index % 2 == 0 else "#b8e3d4"})
-        if index < len(boxes) - 1:
-            ax.annotate("", xy=(x_centers[index + 1] - 0.055, 0.58),
-                        xytext=(x + 0.055, 0.58),
-                        arrowprops={"arrowstyle": "->", "color": "#8a8fa0", "lw": 1.0})
-    ax.set_title("Reproducible sentiment-classification workflow", fontsize=10, pad=8)
+    coordinates = [
+        (1.2, 4.1),
+        (4.4, 4.1),
+        (7.8, 4.1),
+        (6.0, 1.8),
+        (9.6, 1.8),
+        (13.0, 1.8),
+    ]
+    width = 2.3
+    height = 1.3
+    for (title, sub), (cx, cy) in zip(boxes, coordinates):
+        x0 = cx - width / 2
+        y0 = cy - height / 2
+        face = "#f4f1ff" if boxes.index((title, sub)) % 2 == 0 else "#eff9f5"
+        edge = "#c9c2ed" if boxes.index((title, sub)) % 2 == 0 else "#b8e3d4"
+        ax.text(
+            cx,
+            cy,
+            f"{title}\n{sub}",
+            ha="center",
+            va="center",
+            fontsize=8.7,
+            linespacing=1.2,
+            bbox={"boxstyle": "round,pad=0.38", "facecolor": face, "edgecolor": edge, "linewidth": 1.2},
+        )
+
+    arrows = [
+        ((1.2 + width / 2, 4.1), (4.4 - width / 2, 4.1)),
+        ((4.4 + width / 2, 4.1), (7.8 - width / 2, 4.1)),
+        ((7.8, 4.1 - height / 2), (6.0 + width / 2, 1.8 + height / 2)),
+        ((6.0 + width / 2, 1.8), (9.6 - width / 2, 1.8)),
+        ((9.6 + width / 2, 1.8), (13.0 - width / 2, 1.8)),
+    ]
+    for start, end in arrows:
+        ax.annotate(
+            "",
+            xy=end,
+            xytext=start,
+            arrowprops={"arrowstyle": "->", "color": "#7d8493", "lw": 1.4, "shrinkA": 0, "shrinkB": 0},
+        )
+
+    ax.set_title("Reproducible sentiment-classification workflow", fontsize=11, pad=16)
     fig.tight_layout()
-    fig.savefig(FIGURES / "system-architecture.png", dpi=220, bbox_inches="tight")
+    fig.savefig(FIGURES / "system-architecture.png", dpi=240, bbox_inches="tight")
     plt.close(fig)
 
 

@@ -142,7 +142,30 @@ The training, evaluation, inference, and shared preprocessing logic are implemen
 
 The `artifacts/` directory contains `results.json`, `metrics.csv`, cross-validation records, the selected-model test report, test predictions, a confusion-matrix plot, class and text-length summaries, linear-feature explanations, the serialized model, and paired-bootstrap comparisons. These files describe the saved run and should be regenerated together after a modeling or data change.
 
-The unit-test suite covers the three-class pipeline, stratified cross-validation configuration, CSV export schema, dashboard data operations, and deterministic paired-bootstrap comparisons. The latest verification completed successfully with **seven passing tests**.
+The unit-test suite covers the three-class pipeline, stratified cross-validation configuration, CSV export schema, dashboard data operations, deterministic paired-bootstrap comparisons, and BERTweet metric calculation. The latest verification completed successfully with **eight passing tests**.
+
+### Experimental BERTweet fine-tuning
+
+The classical TF-IDF model does not meet a 75–80% test-accuracy target. An optional BERTweet fine-tuning workflow is available in `src/bertweet.py`; it selects the checkpoint using validation accuracy and evaluates the held-out test split only after selection. No improved score is claimed until this experiment has actually run. The test split has a different class distribution from training and validation, so even a strong validation result may not transfer to test.
+
+To run it in Google Colab:
+
+1. Create a notebook with **Runtime → Change runtime type → T4 GPU**, then verify that `!nvidia-smi` shows a GPU.
+2. Upload or clone this repository into the Colab runtime. If using Google Drive, mount it and choose a Drive path for the output so the model survives runtime shutdown.
+3. Install the optional dependencies and run fine-tuning from the repository root:
+
+   ```python
+   %pip install -r requirements-bertweet.txt
+   !python -m src.bertweet --output-dir /content/drive/MyDrive/tweet-sentiment/bertweet
+   ```
+
+   Mount Google Drive first if using the example output path. Training downloads `vinai/bertweet-base`; it needs working access to Hugging Face and may take substantial GPU time.
+
+4. Inspect `results.json` in the output directory. Compare its `test.accuracy` with the existing **0.6191** test accuracy. The saved model is in the output directory's `model/` subfolder.
+
+To use the trained model on the website, upload the output's `model/` folder to a private Hugging Face model repository from Colab with `huggingface_hub` (use `notebook_login()`; never put an access token in project code). In the backend host, install `requirements-bertweet.txt` as well as `requirements.txt`, then set `MODEL_BACKEND=bertweet` and `BERTWEET_MODEL=<your-account>/<your-model-repository>`. For a private model repository, provide its read token through the host's secret environment-variable settings as `HF_TOKEN`. Alternatively, for local inference, copy the model folder to `artifacts/bertweet/model`; the app will use that directory when `BERTWEET_MODEL` is unset.
+
+BERTweet needs substantially more memory and startup time than the current 12 MB scikit-learn model; check the hosting plan's RAM limits before switching a live service. Do not commit model weights to Git—the generated model directory is ignored by `.gitignore`. The default remains `MODEL_BACKEND=sklearn` until the new model has been evaluated and deployed deliberately.
 
 ## Deploy the site and model backend
 
@@ -150,17 +173,15 @@ The dashboard is a single Python web service: `app.py` serves the website, JSON 
 
 ### Deploy with Render
 
-1. Create a **private** GitHub repository for this project. The workspace currently has no Git repository, so initialize and push the files from PowerShell in the project directory:
+1. Create a **private** GitHub repository for this project if you have not already created one. From PowerShell in the project directory, commit and push the project files:
 
    ```powershell
-   git init -b main
-   git add .gitignore README.md requirements.txt render.yaml app.py src data artifacts web reports TweetEval_Sentiment_Classification.ipynb
-   git commit -m "Prepare TweetEval sentiment dashboard deployment"
-   git remote add origin https://github.com/<your-account>/<your-repository>.git
-   git push -u origin main
+   git add .gitignore README.md requirements.txt requirements-bertweet.txt render.yaml app.py src data artifacts web reports TweetEval_Sentiment_Classification.ipynb
+   git commit -m "Add optional BERTweet training workflow"
+   git push origin main
    ```
 
-   Replace the two placeholders in the remote URL with the private repository you created. The tracked `artifacts/sentiment_model.joblib`, evaluation files, and `data/*.csv` are required by the live dashboard. The current model is approximately 12 MB and the data exports total approximately 10 MB. Do not delete them from the deployment repository.
+   The tracked `artifacts/sentiment_model.joblib`, evaluation files, and `data/*.csv` are required by the live dashboard. The current model is approximately 12 MB and the data exports total approximately 10 MB. Do not delete them from the deployment repository.
 
 2. Sign in to Render, choose **New → Blueprint**, connect the private repository, and select the `render.yaml` file at the project root. Render reads the blueprint, installs `requirements.txt`, starts `python app.py`, and registers `/health` as the health-check endpoint. Confirm and deploy the service.
 
@@ -189,6 +210,8 @@ The report discusses potential extensions—temporal external evaluation, system
 | Path | Purpose |
 |---|---|
 | [`src/model.py`](./src/model.py) | Dataset loading, exports, feature pipeline, CV, training, metrics, explanations, and inference |
+| [`src/bertweet.py`](./src/bertweet.py) | Optional GPU BERTweet fine-tuning and inference |
+| [`requirements-bertweet.txt`](./requirements-bertweet.txt) | Optional BERTweet/Colab dependencies |
 | [`render.yaml`](./render.yaml) | Render Blueprint for the live web service |
 | [`data/`](./data/) | Combined and official-split CSV exports |
 | [`artifacts/`](./artifacts/) | Saved metrics, predictions, plots, explanations, and model |
